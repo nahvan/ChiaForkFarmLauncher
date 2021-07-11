@@ -25,7 +25,6 @@ for ($i = 0; $i -lt $blockchain_list.length; $i++) {
 while($true){
 
     for ($i = 0; $i -lt $blockchain_list.length; $i++) {
-        #write host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         powershell -command $blockchain_list[$i] farm summary 
         write host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         #start-sleep 1
