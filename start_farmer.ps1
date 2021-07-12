@@ -37,7 +37,7 @@ function start_harvester{
 
     for ($i = 0; $i -lt $blockchain_list.length; $i++) {
         powershell -command $blockchain_list[$i] start harvester -r 
-        start-sleep 20 #wait 20 seconds between instances
+        start-sleep 5 #wait 5 seconds between instances
     }
     return
 }
