@@ -1,6 +1,6 @@
 ##list of blockchain directories
 $blockchain_list = 
-("C:\Users\Nathan3\AppData\Local\chia-blockchain\app-1.2.0\resources\app.asar.unpacked\daemon\chia.exe", 
+("C:\Users\Nathan3\AppData\Local\chia-blockchain\app-1.1.7\resources\app.asar.unpacked\daemon\chia.exe", 
  "C:\Users\Nathan3\AppData\Local\flax-blockchain\app-0.1.0\resources\app.asar.unpacked\daemon\flax.exe",
  "C:\Users\Nathan3\AppData\Local\goji-blockchain\app-0.2.3\resources\app.asar.unpacked\daemon\goji.exe",
  "C:\Users\Nathan3\AppData\Local\chaingreen-blockchain\app-1.2.0\resources\app.asar.unpacked\daemon\chaingreen.exe",
@@ -19,7 +19,7 @@ $blockchain_list =
 $fork_names = ("Chia", "Flax", "Goji", "Chaingreen", "Spare", "Seno", "Equality", "HDDCoin", "GreenDoge", "Flora", "ChiaDoge", "DogeChia", "Kale", "Avocado")
 
 ##get user imputs (put this inside a while loop later)
-write "functions: 'start farmer', 'start harvester', 'farm summary'"
+write "functions: 'start farmer', 'start harvester', 'farm summary full', 'farm summary short'"
 
 $function_run = read-host "What would you like to run?"
 
@@ -29,10 +29,12 @@ $check_interval = 900 #farm summary interval - put in config later
 function start_farmer{
 
     for ($i = 0; $i -lt $blockchain_list.length; $i++) {
+        write-host "Starting "$fork_names[$i]" farmer..."
         powershell -command $blockchain_list[$i] start farmer -r 
         start-sleep 20 #wait 20 seconds between instances
     }
-    return
+
+    #$function_run = read-host "What would you like to run?"
 }
 
 #starts harvester for each blockchain
@@ -42,38 +44,75 @@ function start_harvester{
         powershell -command $blockchain_list[$i] start harvester -r 
         start-sleep 5 #wait 5 seconds between instances
     }
-    return
+    
+    #$function_run = read-host "What would you like to run?"
 }
 
 #gets farm summary of each blockchain
-function farm_summary{
+function farm_summary_full{
     while($true){
 
         for ($i = 0; $i -lt $blockchain_list.length; $i++) {
 
             $farm_title = $fork_names[$i]+" Farm summary: " 
+            $wallet_title = $fork_names[$i]+" Wallet: "
             write $farm_title
             write ""
             powershell -command $blockchain_list[$i] farm summary 
+            write ""
+            write $wallet_title
+            write ""
+            powershell -command $blockchain_list[$i] wallet show 
             write "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-            #start-sleep 1
+            
         }
-
+        write-host "-----------------------------------------------------------------------------"
         $current_time = (Get-Date -f HH:mm)
         $current_date = (Get-Date -f MM"/"dd)
         write-host "Last updated:" $current_date", "$current_time
-
+        #$function_run = read-host "What would you like to run?"
         start-sleep $check_interval
     }
 }
 
+#gets condensed farm and wallet summary
+function farm_summary_condensed{
 
+    while($true){
 
-switch ($function_run)
-{
-    "farm summary" {farm_summary}
-    "start farmer" {start_farmer}
-    "start harvester" {start_harvester}
+    $summary = @()
+    write-host "Getting fork farm and wallet information..."
+    write-host ""
+
+        for ($i = 0; $i -lt $blockchain_list.length; $i++) {
+          
+            $farmed_fork = powershell -command $blockchain_list[$i] farm summary
+            $wallet_fork = powershell -command $blockchain_list[$i] wallet show
+            $status = $farmed_fork[0].Substring(16)
+            $farm_status = $fork_names[$i] + " Status: " + $status
+            $summary += $farm_status
+            $summary += $farmed_fork[1].Substring(6)
+            $summary += $wallet_fork[4].Substring(10)
+            $summary += ""
+        
+
+        }  
+    
+    write $summary
+    $current_time = (Get-Date -f HH:mm)
+    $current_date = (Get-Date -f MM"/"dd)
+    write-host "-----------------------------------------------------------------------------"
+    write-host "Last updated:" $current_date", "$current_time  
+    start-sleep $check_interval
+    
+    }
 
 }
 
+switch ($function_run)
+{
+    "start farmer" {start_farmer}
+    "start harvester" {start_harvester}
+    "farm summary full" {farm_summary}
+    "farm summary short" {farm_summary_condensed}
+}
