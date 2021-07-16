@@ -23,6 +23,7 @@ $check_interval = 900 #farm summary interval - put in config later
 
 ####-----------------------------------Change the above to your config/preferences-----------------------------------####
 
+$wait_time = $check_interval/60
 
 ##get user imputs (put this inside a while loop later)
 write "functions: 'start farmer', 'start harvester', 'farm summary full', 'farm summary short'"
@@ -74,7 +75,6 @@ function farm_summary_full{
         $current_time = (Get-Date -f HH:mm)
         $current_date = (Get-Date -f MM"/"dd)
         write-host "Last updated:" $current_date", "$current_time
-        $wait_time = $check_interval/60
 
         write-host "Next check in"$wait_time "minutes..."
         start-sleep $check_interval
