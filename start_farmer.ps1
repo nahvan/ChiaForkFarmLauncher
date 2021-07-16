@@ -118,6 +118,6 @@ switch ($function_run)
 {
     "start farmer" {start_farmer}
     "start harvester" {start_harvester}
-    "farm summary full" {farm_summary}
+    "farm summary full" {farm_summary_full}
     "farm summary short" {farm_summary_condensed}
 }
