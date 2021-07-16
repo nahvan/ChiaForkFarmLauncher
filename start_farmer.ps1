@@ -107,7 +107,8 @@ function farm_summary_condensed{
     $current_time = (Get-Date -f HH:mm)
     $current_date = (Get-Date -f MM"/"dd)
     write-host "-----------------------------------------------------------------------------"
-    write-host "Last updated:" $current_date", "$current_time  
+    write-host "Last updated:" $current_date", "$current_time
+    write-host "Next check in"$wait_time "minutes..."
     start-sleep $check_interval
     
     }
