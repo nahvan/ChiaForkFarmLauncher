@@ -38,7 +38,7 @@ function start_farmer{
         start-sleep 20 #wait 20 seconds between instances
     }
 
-    write "All fork farmers launched!"
+    write "All fork farmers launched! Do not close this window!"
 }
 
 #starts harvester for each blockchain
@@ -49,7 +49,7 @@ function start_harvester{
         start-sleep 5 #wait 5 seconds between instances
     }
     
-    write "All fork harvesters launched!"
+    write "All fork harvesters launched! Do not close this window!"
 }
 
 #gets farm summary of each blockchain
