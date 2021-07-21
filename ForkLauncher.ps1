@@ -26,7 +26,7 @@ function start_farmer{
 
     for ($i = 0; $i -lt $execute_arr.length; $i++) {
         write-host "Starting "$fork_names[$i]" farmer..."
-        powershell -command $execute_arr[$i] start farmer -r 
+        powershell -command $execute_arr[$i]" start farmer -r" 
         start-sleep $farm_delay #wait between instances
     }
 
@@ -37,7 +37,7 @@ function start_farmer{
 function start_harvester{
 
     for ($i = 0; $i -lt $execute_arr.length; $i++) {
-        powershell -command $execute_arr[$i] start harvester -r 
+        powershell -command $execute_arr[$i]" start harvester -r" 
         start-sleep $harvester_delay #wait between instances
     }
     
