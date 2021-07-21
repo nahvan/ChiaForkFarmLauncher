@@ -7,7 +7,7 @@ $execute_arr = @()
 for ($i = 0; $i -lt $blockchain_list.length; $i++) {
         $execute_arr+= $blockchain_list[$i].ForkDir+$blockchain_list[$i].ForkName+".exe"
 }
-write $execute_arr
+
 #adds variables from config.json
 $check_interval = $config.check_interval
 $farm_delay = $config.farm_delay
@@ -31,6 +31,7 @@ function start_farmer{
     }
 
     write "All fork farmers launched! Do not close this window!"
+    pause
 }
 
 #starts harvester for each blockchain
@@ -42,6 +43,7 @@ function start_harvester{
     }
     
     write "All fork harvesters launched! Do not close this window!"
+    pause
 }
 
 #gets farm summary of each blockchain
