@@ -5,5 +5,9 @@
 {
 "ForkDir": "C:\\Users\\Nahvan\\AppData\\Local\\flax-blockchain\\app-0.1.0\\resources\\app.asar.unpacked\\daemon\\",
 "ForkName": "Flax"
+},
+{
+"ForkDir": "C:\\Users\\Nahvan\\AppData\\Local\\chaingreen-blockchain\\app-1.2.1\\resources\\app.asar.unpacked\\daemon\\",
+"ForkName": "Chaingreen"
 }
 ]
