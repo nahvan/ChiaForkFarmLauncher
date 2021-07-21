@@ -1,0 +1,5 @@
+{
+	"check_interval": 900,
+	"farm_delay": 20,
+	"harvester_delay": 5
+}
